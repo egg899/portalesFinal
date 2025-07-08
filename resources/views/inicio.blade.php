@@ -10,7 +10,7 @@
 
     {{-- Productos destacados --}}
     <div class="container mb-5">
-        <h2 class="text-center mb-4 text-dark">Nuestro Producto</h2>
+        <h2 class="text-center mb-4 text-dark">Nuestros Productos</h2>
         <div class="row justify-content-center">
             @forelse ($productos as $producto)
                 <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
@@ -20,7 +20,7 @@
                         </div>
                         @if ($producto->imagen)
                             <img
-                                src="{{ asset('images/' . $producto->imagen) }}"
+                                src="{{ asset('storage/' . $producto->imagen) }}"
                                 class="card-img-top px-4 pb-4"
                                 alt="{{ $producto->nombre }}"
                                 style="height: 300px; object-fit: contain;">

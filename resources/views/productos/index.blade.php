@@ -2,7 +2,12 @@
     <x-slot:title>Nuestro Producto</x-slot:title>
 
     <div class="container py-5">
-
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 
 
         @auth
@@ -59,6 +64,22 @@
 
                                 @endif
                          @endauth
+
+                        @auth
+                            <form action="{{ route('compras.store') }}" method="POST" class="mt-2">
+                                @csrf
+                                <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <input type="number" name="cantidad" value="1" min="1" class="form-control form-control-sm w-25">
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        <i class="biu bi-cart-plus"></i> Agregar
+                                    </button>
+                                </div>
+                            </form>
+                        @endauth
+
+
+
                         </div>
 
 

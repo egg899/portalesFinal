@@ -120,3 +120,24 @@ Route::get('/producto/{producto}/eliminar', [\App\http\Controllers\ProductoContr
 Route::delete('/producto/{producto}', [\App\Http\Controllers\ProductoController::class, 'destroy'])
     ->name('producto.destroy')
     ->middleware(['auth', 'admin']);
+
+
+//Compras
+Route::get('/carrito', [\App\Http\Controllers\CompraController::class, 'index'])
+    ->name('compras.index')
+    ->middleware('auth');
+
+//Agregar producto al carrito
+Route::post('/carrito', [\App\Http\Controllers\CompraController::class, 'store'])
+    ->name('compras.store')
+    ->middleware('auth');
+
+//Actualiza cantidad del producto en el carrito
+Route::put('/carrito/{compra}', [\App\Http\Controllers\CompraController::class, 'update'])
+    ->name('compras.update')
+    ->middleware('auth');
+
+//Eliminar producto del carrito
+Route::delete('/carrito/{carrito}', [\App\Http\Controllers\CompraController::class, 'destroy'])
+    ->name('compras.destroy')
+    ->middleware('auth');

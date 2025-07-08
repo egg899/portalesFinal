@@ -7,9 +7,16 @@
     <div class="text-center my-5">
         <h1 class="display-5 fw-bold text-primary">{{ $blog->titulo }}</h1>
         <p class="text-muted">
-            Publicado el {{ $blog->fecha->format('d/m/Y') }} | Categoría: <span class="fw-semibold">{{ $blog->categoria }}</span>
-        </p>
+            Publicado el {{ $blog->fecha->format('d/m/Y') }} | Categoría:
+               @foreach ( $blog->categorias as $categoria)
+
+                                        <span class="badge bg-secondary">{{ $categoria->name }}</span>
+
+                                    @endforeach
+                                </p>
     </div>
+        </p>
+
 
     {{-- Imagen del Blog --}}
     <div class="text-center mb-4">

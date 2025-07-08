@@ -48,6 +48,7 @@
                                 {{ auth()->user()->username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li>  <a href="{{ route('compras.index') }} " class="dropdown-item" >Carrito</a></li>
                                 <li>
                                 {{-- <form method="POST" action="{{ route('auth.logout') }}"> --}}
                                 <form method="POST" action="{{ url('/cerrar-sesion') }}">
@@ -55,6 +56,7 @@
                                     <button type="submit" class="dropdown-item">Cerrar sesión</button>
                                 </form>
                                 </li>
+
                             </ul>
                             </li>
                         @endif
