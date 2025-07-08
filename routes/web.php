@@ -12,8 +12,8 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'home'])
 Route::get('/quienes-somos', [\App\Http\Controllers\AboutController::class, 'about'])
     ->name('about');
 // Route::get('/movies', [\App\Http\Controllers\MovieController::class, 'index'])->name('movies.index');
-Route::get('/producto', [\App\Http\Controllers\ProductoController::class, 'index'])
-    ->name('producto.index');
+// Route::get('/producto', [\App\Http\Controllers\ProductoController::class, 'index'])
+//     ->name('producto.index');
 
 Route::get('/blogs', [\App\Http\Controllers\BlogController::class, 'index'])
     ->name('blogs.index')
@@ -43,6 +43,7 @@ Route::put('/blog/{id}', [\App\http\Controllers\BlogController::class, 'update']
 Route::get('/blog/{id}/eliminar', [\App\http\Controllers\BlogController::class,'delete'])
     ->name('blogs.delete')
     ->middleware('auth');
+
 Route::delete('/blog/{id}', [\App\http\Controllers\BlogController::class, 'destroy'])
         ->name('blogs.destroy')
         ->whereNumber('id')
@@ -60,7 +61,7 @@ Route::post('/blogs', [\App\http\Controllers\BlogController::class, 'store'])
     ->middleware('auth');
 
 
-    // Mostrar formulario de login
+// Mostrar formulario de login
 Route::get('/iniciar-sesion', [\App\http\Controllers\AuthController::class, 'login'])->name('auth.login');
 
 // Procesar login
@@ -81,3 +82,41 @@ Route::post('cerrar-sesion', [\App\http\Controllers\AuthController::class, 'logo
 Route::get('/admin/usuarios', [\App\Http\Controllers\UsuarioController::class, 'index'])
     ->name('admin.usuarios.index')
     ->middleware('auth');
+
+
+
+//PRODUCTOS
+Route::get('/producto', [\App\Http\Controllers\ProductoController::class, 'index'])
+    ->name('producto.index');
+
+
+//Ver formulario para crear un producto
+Route::get('/producto/crear', [\App\Http\Controllers\ProductoController::class, 'create'])
+    ->name('producto.create')
+    ->middleware(['auth', 'admin']);
+
+//Guardar un nuevo producto
+Route::post('/producto', [\App\Http\Controllers\ProductoController::class, 'store'])
+    ->name('producto.store')
+    ->middleware(['auth', 'admin']);
+
+//Editar un producto
+Route::get('/producto/{producto}/editar', [\App\Http\Controllers\ProductoController::class, 'edit'])
+    ->name('producto.edit')
+    ->middleware(['auth', 'admin']);
+
+// Actualizar un producto
+Route::put('/producto/{producto}', [\App\Http\Controllers\ProductoController::class, 'update'])
+    ->name('producto.update')
+    ->middleware(['auth', 'admin']);
+
+
+// Eliminar un producto
+Route::get('/producto/{producto}/eliminar', [\App\http\Controllers\ProductoController::class,'delete'])
+    ->name('producto.delete')
+    ->middleware('auth', 'admin');
+
+
+Route::delete('/producto/{producto}', [\App\Http\Controllers\ProductoController::class, 'destroy'])
+    ->name('producto.destroy')
+    ->middleware(['auth', 'admin']);
