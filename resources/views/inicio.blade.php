@@ -3,9 +3,9 @@
 
     {{-- Hero principal --}}
     <div class="text-center py-5 bg-light mb-5 rounded shadow-sm">
-        <h1 class="display-4 fw-bold text-primary">Bienvenido a ElectroPods</h1>
+        <h1 class="display-4 fw-bold text-primary">Bienvenido a ElectroCore</h1>
         <p class="lead">Experimentá el sonido como nunca antes.</p>
-        <p class="text-muted">ElectroPods combina tecnología de última generación con diseño moderno para ofrecerte una experiencia auditiva premium.</p>
+        <p class="text-muted">ElectroCore combina tecnología de última generación con diseño moderno para ofrecerte una experiencia auditiva premium.</p>
     </div>
 
     {{-- Productos destacados --}}

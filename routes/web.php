@@ -83,7 +83,10 @@ Route::get('/admin/usuarios', [\App\Http\Controllers\UsuarioController::class, '
     ->name('admin.usuarios.index')
     ->middleware('auth');
 
-
+//DASHBOARD
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware(['auth', 'admin']);
 
 //PRODUCTOS
 Route::get('/producto', [\App\Http\Controllers\ProductoController::class, 'index'])

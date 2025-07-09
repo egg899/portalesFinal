@@ -21,14 +21,12 @@
         @endauth
 
         <div class="text-center mb-5">
-            <h1 class="display-5 text-primary">Conocé más sobre nuestro productos estrellas</h1>
-            <p class="lead text-secondary">
-                Donde el diseño se encuentra con el sonido.
-                <br>ElectroPods no es solo un auricular, es una experiencia que te acompaña a donde vayas.
-                <br>También puedes ver algunos mas de nuestros productos.
+                <h1 class="display-5 text-primary">Conocé más sobre nuestros productos estrellas</h1>
+                    <p class="lead text-secondary">Donde el diseño se encuentra con el sonido.</p>
+                    <p class="lead text-secondary">ElectroCore no es solo una marca, es una experiencia que te acompaña a donde vayas.</p>
+                    <p class="lead text-secondary">También puedes ver algunos más de nuestros productos.</p>
+            </div>
 
-            </p>
-        </div>
 
         <div class="row justify-content-center">
             @forelse ($productos as $producto)

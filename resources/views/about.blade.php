@@ -10,7 +10,7 @@
             <div class="col-md-8 text-center">
                 <h2>Nuestra Historia</h2>
                 <p>
-                    ElectroPods nace de la pasión por la música y la tecnología. Somos un equipo de desarrolladores, diseñadores de sonido e ingenieros que buscaban reinventar la experiencia auditiva.
+                    ElectroCore nace de la pasión por la música y la tecnología. Somos un equipo de desarrolladores, diseñadores de sonido e ingenieros que buscaban reinventar la experiencia auditiva.
                 </p>
 
                 <h2 class="mt-4">Nuestra Misión</h2>
