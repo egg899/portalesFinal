@@ -73,5 +73,19 @@
         @endif
     </div>
 
-
+    <div id="checkout"></div>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script>
+        const mp = new MercadoPago('APP_USR-7ad3d7e7-723f-4feb-bf76-4db920945b82');
+        mp.bricks().create(
+            "wallet",
+            "checkout",
+            {
+                initialization: {
+                    // Imprimimos con php el id de la preferencia
+                    preferenceId: '{{ $preference->id }}'
+                }
+            }
+        );
+    </script>
 </x-layout>

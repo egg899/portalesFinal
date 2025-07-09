@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\MercadoPagoConfig;
 use App\Models\Compra;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
@@ -14,13 +16,41 @@ class CompraController extends Controller
     public function index()
     {
 
-        $compras = Compra::with('producto')
-            ->where('usuario_id', Auth::id())
-            ->get();
+       $compras = Compra::with('producto')
+        ->where('usuario_id', Auth::id())
+        ->get();
 
-        return view('carrito.index', compact('compras'));
+        $items = [];
+
+        foreach ($compras as $compra) {
+            $items[] = [
+                'title' => $compra->producto->nombre,
+                'quantity' => $compra->cantidad,
+                'unit_price' => floatval($compra->producto->precio),
+                'currency_id' => 'ARS'
+            ];
+        }
+
+        $preference = null;
+
+        if (!empty($items)) {
+            MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+
+
+
+            $client = new PreferenceClient();
+            $preference = $client->create([
+                'items' => $items,
+
+            ]);
+        }
+
+        return view('carrito.index', compact('compras', 'preference'));
+    //return view('carrito.index', compact('compras'));
 
     }//index
+
+
 
     // Agregar producto al carrito
     public function store(Request $request)
@@ -89,6 +119,44 @@ class CompraController extends Controller
     }
 
 
+
+    ///HACEMOS EL CHECKOUT CON MERCADO PAGO
+    // public function showBuyForm()
+    // {
+    //             ///MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+
+
+
+    //             $compras = Compra::with('producto')
+    //                 ->where('usuario_id', Auth::id())
+    //                 ->get();
+
+
+
+    //             $items = [];
+
+    //             foreach ($compras as $compra) {
+    //                 $items[] = [
+    //                     'title' => $compra->producto->nombre,
+    //                     'quantity' => $compra->cantidad,
+    //                     'unit_price' => floatval($compra->producto->precio),
+    //                     'currency_id' => 'ARS'
+    //                 ];
+    //             }
+
+
+    //             MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+
+    //             $preferenceFactory = new PreferenceClient();
+    //             $preference = $preferenceFactory->create([
+    //                 'items' => $items,
+    //             ]);
+    //             //dd($items);
+
+    //            return view('mercadopago.buy-form', compact('compras', 'preference'));
+
+
+    // }//checkout -showBuyForm
 
 }
 ?>

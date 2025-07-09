@@ -42,7 +42,7 @@
                         $carritoCount = $carritoCount ?? 0;
                     @endphp
                     @if($carritoCount > 0)
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      <span class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
                         {{ $carritoCount }}
                         <span class="visually-hidden">items en el carrito</span>
                       </span>
@@ -60,7 +60,7 @@
                 </li>
               @else
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle ms-3" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ auth()->user()->username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -69,7 +69,7 @@
                         <a class="dropdown-item" href="{{ url('/admin/usuarios') }}">Lista de Usuarios</a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="{{ url('/dashboard') }}">Dasboard</a>
+                        <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
                       </li>
                     @endif
                     <li>
