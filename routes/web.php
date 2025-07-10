@@ -144,3 +144,18 @@ Route::put('/carrito/{compra}', [\App\Http\Controllers\CompraController::class, 
 Route::delete('/carrito/{carrito}', [\App\Http\Controllers\CompraController::class, 'destroy'])
     ->name('compras.destroy')
     ->middleware('auth');
+
+
+
+//Vistas para confirmación o negación de la compra
+Route::get('/carrito/exito', [\App\Http\Controllers\CompraController::class, 'success'])
+    ->name('compras.success')
+    ->middleware('auth');
+
+Route::get('/carrito/pendiente', [\App\Http\Controllers\CompraController::class, 'pending'])
+    ->name('compras.pending')
+    ->middleware('auth');
+
+Route::get('/carrito/error', [\App\Http\Controllers\CompraController::class, 'error'])
+    ->name('compras.failure')
+    ->middleware('auth');

@@ -30,25 +30,57 @@ class CompraController extends Controller
                 'currency_id' => 'ARS'
             ];
         }
+if (empty($items)) {
+        dd('⚠️ El array $items está vacío. Verificá las compras del usuario.');
+    }
 
-        $preference = null;
+    try {
+        MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+        $preferenceFactory = new PreferenceClient();
 
-        if (!empty($items)) {
-            MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+        $back_urls = [
+                'success' => route('compras.success'),
+                'pending' => route('compras.pending'),
+                'failure' => route('compras.failure'),
+        ];
 
+        $preference = $preferenceFactory->create([
+            'items' => $items,
+            'back_urls' =>  $back_urls,
+            'auto_return' => 'approved',
+        ]);
+    } catch (\MercadoPago\Exceptions\MPApiException $e) {
+        dd([
+            'status' => $e->getApiResponse()->getStatusCode(),
+            'error' => $e->getApiResponse()->getContent()
+        ]);
+    }
 
-
-            $client = new PreferenceClient();
-            $preference = $client->create([
-                'items' => $items,
-
-            ]);
-        }
-
-        return view('carrito.index', compact('compras', 'preference'));
-    //return view('carrito.index', compact('compras'));
+         return view('carrito.index', compact('compras', 'preference'));
+       // return view('carrito.index', compact('compras'));
 
     }//index
+
+
+    //Metodos para confirmación o negación de la compra en Mercado Pago
+    public function success(Request $request) {
+        // dd($request);
+        return view('carrito.success');
+    }//success
+
+
+
+      public function pending(Request $request) {
+        // dd($request);
+        return view('carrito.pending');
+    }//pending
+
+      public function failure(Request $request) {
+        // dd($request);
+        return view('carrito.failure');
+    }//failure
+
+
 
 
 
