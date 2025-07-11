@@ -8,8 +8,10 @@
     <!-- Bootstrap desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-    <!-- Tus estilos personalizados -->
-    <link rel="stylesheet" href="{{ url('css/styles.css') }}">
+        <!-- Estilos personalizados -->
+    {{-- <link rel="stylesheet" href="{{ url('css/styles.css') }}"> --}}
+    <link rel="stylesheet" href="https://1f1f28f5ad75.ngrok-free.app/css/styles.css">
+
   </head>
   <body class="d-flex flex-column min-vh-100">
     <div id="app">

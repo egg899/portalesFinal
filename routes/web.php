@@ -159,3 +159,10 @@ Route::get('/carrito/pendiente', [\App\Http\Controllers\CompraController::class,
 Route::get('/carrito/error', [\App\Http\Controllers\CompraController::class, 'error'])
     ->name('compras.failure')
     ->middleware('auth');
+
+
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+Route::post("/carrito/confirmacion-pago",  [\App\Http\Controllers\CompraController::class, 'paymentConfirmation'])
+->name('compras.payment-confirmation')
+->withoutMiddleware([VerifyCsrfToken::class]);
+

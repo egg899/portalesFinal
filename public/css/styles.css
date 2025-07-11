@@ -1,0 +1,102 @@
+/* Estilo claro tech moderno */
+
+body {
+  background-color: #f4f6f9;
+  color: #1a1a1a;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+a {
+  color: #5e72e4;
+  text-decoration: none;
+}
+
+a:hover,
+.nav-link:hover,
+.dropdown-item:hover {
+  color: #11cdef;
+  text-shadow: 0 0 4px #11cdef;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #5e72e4;
+}
+
+.navbar-brand,
+.nav-link,
+.dropdown-item {
+  color: #1a1a1a !important;
+}
+
+.dropdown-menu {
+  background-color: #ffffff;
+  border: 1px solid #5e72e4;
+}
+
+/* Botones */
+.btn,
+button,
+input[type="submit"] {
+  background-color: #5e72e4;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: #11cdef;
+  box-shadow: 0 0 8px rgba(17, 205, 239, 0.5);
+  color: #fff;
+}
+
+/* Alertas */
+.alert-success {
+  background-color: #d1f0e1;
+  color: #2b8c52;
+  border-left: 5px solid #2ecc71;
+}
+
+.alert-danger {
+  background-color: #ffe5e5;
+  color: #c0392b;
+  border-left: 5px solid #e74c3c;
+}
+
+/* Footer */
+footer {
+  background-color: #ffffff;
+  color: #5e72e4;
+  border-top: 1px solid #5e72e4;
+}
+
+/* Badge del carrito */
+.badge.bg-danger {
+  background-color: #e74c3c !important;
+  color: #fff;
+}
+
+/* Formularios */
+input,
+select,
+textarea {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #5e72e4;
+  box-shadow: 0 0 4px rgba(94, 114, 228, 0.5);
+}

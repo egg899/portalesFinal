@@ -8,6 +8,7 @@ use MercadoPago\MercadoPagoConfig;
 use App\Models\Compra;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CompraController extends Controller
 {
@@ -38,10 +39,15 @@ if (empty($items)) {
         MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
         $preferenceFactory = new PreferenceClient();
 
+        // $back_urls = [
+        //         'success' => route('compras.success'),
+        //         'pending' => route('compras.pending'),
+        //         'failure' => route('compras.failure'),
+        // ];
         $back_urls = [
-                'success' => route('compras.success'),
-                'pending' => route('compras.pending'),
-                'failure' => route('compras.failure'),
+                 'success' => 'https://1f1f28f5ad75.ngrok-free.app/carrito/exito',
+                 'pending' => 'https://1f1f28f5ad75.ngrok-free.app/carrito/pendiente',
+                 'failure' => 'https://1f1f28f5ad75.ngrok-free.app/carrito/error',
         ];
 
         $preference = $preferenceFactory->create([
@@ -80,7 +86,9 @@ if (empty($items)) {
         return view('carrito.failure');
     }//failure
 
-
+    public function paymentConfirmation(Request $request){
+        Log::info(collect($request->input()));
+    }
 
 
 
