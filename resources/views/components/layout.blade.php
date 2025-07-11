@@ -9,8 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
         <!-- Estilos personalizados -->
-    {{-- <link rel="stylesheet" href="{{ url('css/styles.css') }}"> --}}
-    <link rel="stylesheet" href="https://1f1f28f5ad75.ngrok-free.app/css/styles.css">
+    <link rel="stylesheet" href="{{  secure_asset('css/styles.css')  }}">
+    {{-- <link rel="stylesheet" href="https://1f1f28f5ad75.ngrok-free.app/css/styles.css"> --}}
 
   </head>
   <body class="d-flex flex-column min-vh-100">
@@ -74,6 +74,9 @@
                         <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
                       </li>
                     @endif
+                    <li>
+                        <a class="dropdown-item" href="{{ url('/ordenes') }}">Historial de Ordenes</a>
+                      </li>
                     <li>
                       <form method="POST" action="{{ url('/cerrar-sesion') }}">
                         @csrf

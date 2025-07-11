@@ -9,6 +9,7 @@ use App\Models\Compra;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\OrderController;
 
 class CompraController extends Controller
 {
@@ -31,36 +32,45 @@ class CompraController extends Controller
                 'currency_id' => 'ARS'
             ];
         }
-if (empty($items)) {
-        dd('⚠️ El array $items está vacío. Verificá las compras del usuario.');
+        // if (empty($items)) {
+        //          dd('⚠️ El array $items está vacío. Verificá las compras del usuario.');
+        //     }
+        $preference = null;
+        if(!$compras->isEmpty())
+        {
+             try {
+                MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+                $preferenceFactory = new PreferenceClient();
+
+                // $back_urls = [
+                //         'success' => route('compras.success'),
+                //         'pending' => route('compras.pending'),
+                //         'failure' => route('compras.failure'),
+                // ];
+                // $back_urls = [
+                //         'success' => 'https://ba5800020952.ngrok-free.app/carrito/exito',
+                //         'pending' => 'https://ba5800020952.ngrok-free.app/carrito/pendiente',
+                //         'failure' => 'https://ba5800020952.ngrok-free.app/carrito/error',
+                // ];
+                 $back_urls = [
+                        'success' => env('APP_URL') . '/carrito/exito',
+                        'pending' => env('APP_URL') . '/carrito/pendiente',
+                        'failure' => env('APP_URL') . '/carrito/error',
+                ];
+
+                $preference = $preferenceFactory->create([
+                    'items' => $items,
+                    'back_urls' =>  $back_urls,
+                    'auto_return' => 'approved',
+                ]);
+            } catch (\MercadoPago\Exceptions\MPApiException $e) {
+                dd([
+                    'status' => $e->getApiResponse()->getStatusCode(),
+                    'error' => $e->getApiResponse()->getContent()
+                ]);
     }
+        }
 
-    try {
-        MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
-        $preferenceFactory = new PreferenceClient();
-
-        // $back_urls = [
-        //         'success' => route('compras.success'),
-        //         'pending' => route('compras.pending'),
-        //         'failure' => route('compras.failure'),
-        // ];
-        $back_urls = [
-                 'success' => 'https://1f1f28f5ad75.ngrok-free.app/carrito/exito',
-                 'pending' => 'https://1f1f28f5ad75.ngrok-free.app/carrito/pendiente',
-                 'failure' => 'https://1f1f28f5ad75.ngrok-free.app/carrito/error',
-        ];
-
-        $preference = $preferenceFactory->create([
-            'items' => $items,
-            'back_urls' =>  $back_urls,
-            'auto_return' => 'approved',
-        ]);
-    } catch (\MercadoPago\Exceptions\MPApiException $e) {
-        dd([
-            'status' => $e->getApiResponse()->getStatusCode(),
-            'error' => $e->getApiResponse()->getContent()
-        ]);
-    }
 
          return view('carrito.index', compact('compras', 'preference'));
        // return view('carrito.index', compact('compras'));
@@ -71,6 +81,7 @@ if (empty($items)) {
     //Metodos para confirmación o negación de la compra en Mercado Pago
     public function success(Request $request) {
         // dd($request);
+        app(OrderController::class)->storeFromCarrito();
         return view('carrito.success');
     }//success
 

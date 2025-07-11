@@ -75,6 +75,7 @@
 
     <div id="checkout"></div>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
+    @if($preference)
     <script>
         const mp = new MercadoPago('APP_USR-7ad3d7e7-723f-4feb-bf76-4db920945b82');
         mp.bricks().create(
@@ -88,4 +89,5 @@
             }
         );
     </script>
+    @endif
 </x-layout>
