@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Compra;
 use App\Models\Producto;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -64,4 +65,27 @@ class OrderController extends Controller
 
         return view('orders.index', compact('orders'));
     }
+
+
+    public function historialUsuario(Usuario $usuario)
+    {
+
+        if(Auth::user()->role !== 'admin')
+        {
+            abort(403, 'Acceso no autirizado');
+        }
+
+        $ordenes = \App\Models\Order::with('items.producto')
+            ->where('usuario_id', $usuario->id)
+            ->latest()
+            ->get();
+
+        return view('admin.usuarios.historial', compact('usuario', 'ordenes'));
+
+
+
+    }
+
+
+
 }

@@ -19,7 +19,11 @@
                 @foreach($usuarios as $usuario)
                 <tr>
                     <td>{{ $usuario->id }}</td>
-                    <td>{{ $usuario->username }}</td>
+                   <td>
+                        <a href="{{ route('admin.usuarios.historial', $usuario) }}">
+                            {{ $usuario->username }}
+                        </a>
+                    </td>
                     <td>{{ $usuario->role }}</td>
                     <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
                     <td>

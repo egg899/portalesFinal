@@ -167,7 +167,12 @@ Route::post("/carrito/confirmacion-pago",  [\App\Http\Controllers\CompraControll
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
 
-//Historial
+//Historial Individual
 Route::get('/ordenes', [\App\Http\Controllers\OrderController::class, 'index'])
     ->name('orders.index')
     ->middleware('auth');
+
+//Historial para que solo el admin tenga acceso
+Route::get('/admin/usuarios/{usuario}/ordenes', [\App\Http\Controllers\OrderController::class, 'historialUsuario'])
+    ->name('admin.usuarios.historial')
+    ->middleware(['auth', 'admin']);
