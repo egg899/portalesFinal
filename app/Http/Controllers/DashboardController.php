@@ -9,39 +9,36 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Productos más comprados
-        $productosPopulares = DB::table('compras')
-            ->join('productos', 'compras.producto_id', '=', 'productos.id')
-            ->select('productos.nombre', DB::raw('SUM(compras.cantidad) as total_vendidos'))
+
+        $productosPopulares = DB::table('order_items')
+            ->join('productos', 'order_items.producto_id', '=', 'productos.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.status', 'completado')  // Solo órdenes completadas
+            ->select('productos.nombre', DB::raw('SUM(order_items.quantity) as total_vendidos'))
             ->groupBy('productos.nombre')
             ->orderByDesc('total_vendidos')
             ->take(5)
             ->get();
 
-
-
-
-       //Mes con mayor facturación
-       $mesTop = DB::table('compras')
-            ->join('productos', 'compras.producto_id', '=', 'productos.id')
-            ->selectRaw('DATE_FORMAT(compras.created_at, "%Y-%m") as mes, SUM(compras.cantidad * productos.precio) as total_mes')
+        $mesTop = DB::table('order_items')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.status', 'completado')
+            ->selectRaw('DATE_FORMAT(orders.created_at, "%Y-%m") as mes, SUM(order_items.quantity * order_items.price) as total_mes')
             ->groupBy('mes')
             ->orderByDesc('total_mes')
             ->first();
 
-       //Total facturado
-       $totalFacturado = DB::table('compras')
-           ->join('productos', 'compras.producto_id', '=', 'productos.id')
-           ->selectRaw('SUM(compras.cantidad * productos.precio) as total')
-           ->value('total');
+        $totalFacturado = DB::table('order_items')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.status', 'completado')
+            ->selectRaw('SUM(order_items.quantity * order_items.price) as total')
+            ->value('total');
 
-
-
-       //usuario que más gastó
-       $usuarioTop = DB::table('compras')
-            ->join('productos', 'compras.producto_id', '=', 'productos.id')
-            ->join('usuarios', 'compras.usuario_id', '=', 'usuarios.id')
-            ->select('usuarios.username', DB::raw('SUM(compras.cantidad * productos.precio) as total_gastado'))
+        $usuarioTop = DB::table('order_items')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->join('usuarios', 'orders.usuario_id', '=', 'usuarios.id')
+            ->where('orders.status', 'completado')
+            ->select('usuarios.username', DB::raw('SUM(order_items.quantity * order_items.price) as total_gastado'))
             ->groupBy('usuarios.username')
             ->orderByDesc('total_gastado')
             ->first();

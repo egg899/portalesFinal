@@ -7,15 +7,16 @@
         <form method="POST" action="{{ route('auth.authenticate') }}">
             @csrf
             <div class="mb-3">
-                <label for="username" class="form-label">Usuario</label>
+                <label for="email" class="form-label">Correo Electrónico</label>
                 <input
-                    type="text"
-                    id="username"
-                    name="username"
+                    type="email"
+                    id="email"
+                    name="email"
                     class="form-control"
-                    placeholder="Ingrese su usuario"
+                    placeholder="Ingrese su correo electrónico"
                     required
                     autofocus
+                    value="{{ old('email') }}"
                 >
             </div>
             <div class="mb-4">

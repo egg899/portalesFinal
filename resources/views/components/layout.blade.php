@@ -66,6 +66,9 @@
                     {{ auth()->user()->username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ url('/perfil') }}">Perfil</a>
+                      </li>
                     @if(auth()->user()->role === 'admin')
                       <li>
                         <a class="dropdown-item" href="{{ url('/admin/usuarios') }}">Lista de Usuarios</a>
@@ -77,6 +80,8 @@
                     <li>
                         <a class="dropdown-item" href="{{ url('/ordenes') }}">Historial de Ordenes</a>
                       </li>
+
+
                     <li>
                       <form method="POST" action="{{ url('/cerrar-sesion') }}">
                         @csrf

@@ -176,3 +176,21 @@ Route::get('/ordenes', [\App\Http\Controllers\OrderController::class, 'index'])
 Route::get('/admin/usuarios/{usuario}/ordenes', [\App\Http\Controllers\OrderController::class, 'historialUsuario'])
     ->name('admin.usuarios.historial')
     ->middleware(['auth', 'admin']);
+
+
+//Para perfiles
+// Ver el perfil
+Route::get('/perfil', [\App\Http\Controllers\UsuarioController::class, 'showPerfil'])
+    ->name('perfil.show')
+    ->middleware('auth');
+
+// Formulario para editar perfil
+Route::get('/perfil/editar', [\App\Http\Controllers\UsuarioController::class, 'editPerfil'])
+    ->name('perfil.edit')
+    ->middleware('auth');
+
+// Guardar cambios
+Route::put('/perfil', [\App\Http\Controllers\UsuarioController::class, 'updatePerfil'])
+    ->name('perfil.update')
+    ->middleware('auth');
+

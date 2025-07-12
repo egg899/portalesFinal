@@ -9,7 +9,7 @@ class Usuario extends Authenticatable
 {
     protected $table = 'usuarios';
 
-    protected $fillable = ['username', 'password', 'role'];
+    protected $fillable = ['username',  'email', 'password', 'role'];
 
     protected $hidden = ['password'];
 
@@ -21,10 +21,16 @@ class Usuario extends Authenticatable
     }
 
 
+    public function ordenes()
+    {
+        return $this->hasMany(Order::class, 'usuario_id');
+    }
+
+
    protected static function booted(): void
-{
-    static::deleting(function ($usuario) {
-        $usuario->compras()->delete();
-    });
-}
+    {
+        static::deleting(function ($usuario) {
+            $usuario->compras()->delete();
+        });
+    }
  }

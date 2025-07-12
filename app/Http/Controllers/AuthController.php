@@ -19,7 +19,8 @@ class AuthController extends Controller
     public function register(Request $request)
 {
     $request->validate([
-        'username' => 'required|string|max:255',
+        'username' => 'required|string|max:255|unique:usuarios,username',
+        'email' => 'required|email|max:255|unique:usuarios,email',
         'password' => 'required|string|min:4|confirmed',
     ], [
         'password.confirmed' => 'Las contraseñas no coinciden.',
@@ -27,6 +28,7 @@ class AuthController extends Controller
 
     Usuario::create([
         'username' => $request->username,
+        'email' => $request->email,
         'password' => Hash::make($request->password),
     ]);
 
@@ -46,7 +48,11 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        // $credentials = $request->only('username', 'password');
+        $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string',
+    ]);
 
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();

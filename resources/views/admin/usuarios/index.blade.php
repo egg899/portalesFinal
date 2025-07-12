@@ -26,7 +26,7 @@
                     </td>
                     <td>{{ $usuario->role }}</td>
                     <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
-                    <td>
+                    {{-- <td>
                          @if ($usuario->compras->isEmpty())
                                 <span class="text-muted">Sin compras</span>
                             @else
@@ -38,7 +38,28 @@
                                     @endforeach
                                 </ul>
                             @endif
-                    </td>
+                    </td> --}}
+                    <td>
+                @php
+                    $ordenes = $usuario->ordenes;
+                    $hayProductos = $ordenes->flatMap->items->isNotEmpty();
+                @endphp
+
+                @if ($ordenes->isEmpty() || !$hayProductos)
+                    <span class="text-muted">Sin órdenes</span>
+                @else
+                    <ul class="mb-0">
+                        @foreach ($ordenes as $orden)
+                            @foreach ($orden->items as $item)
+                                <li>
+                                    {{ $item->producto->nombre ?? 'Producto eliminado' }} (x{{ $item->quantity }})
+                                </li>
+                            @endforeach
+                        @endforeach
+                    </ul>
+                @endif
+            </td>
+
 
 
                 </tr>
